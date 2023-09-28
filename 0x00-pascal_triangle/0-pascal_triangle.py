@@ -4,6 +4,7 @@
 pascal triangle function
 """
 
+
 def pascal_triangle(n):
     """pascal triangle function"""
     if n <= 0:
@@ -16,5 +17,6 @@ def pascal_triangle(n):
         row.append(1)
         pascal.append(row)
     return pascal
+
 
 if __name__ == "__main__":
