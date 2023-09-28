@@ -1,22 +1,21 @@
-#!/usr/bin/python3
-
+#!/usr/bin/env python3
 """
-pascal triangle function
+0-pascal_triangle.py
 """
 
 
 def pascal_triangle(n):
-    """pascal triangle function"""
     if n <= 0:
         return []
-    pascal = [[1]]
-    for i in range(1, n):
-        row = [1]
-        for j in range(1, i):
-            row.append(pascal[i - 1][j - 1] + pascal[i - 1][j])
-        row.append(1)
-        pascal.append(row)
-    return pascal
 
+    triangle = []
+    for i in range(n):
+        row = [1]  # First element in each row is always 1
+        if triangle:
+            last_row = triangle[-1]
+            for j in range(len(last_row) - 1):
+                row.append(last_row[j] + last_row[j + 1])
+            row.append(1)  # Last element in each row is always 1
+        triangle.append(row)
 
-if __name__ == "__main__":
+    return triangle
