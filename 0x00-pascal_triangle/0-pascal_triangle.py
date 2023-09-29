@@ -3,8 +3,11 @@
 0-pascal_triangle
 """
 
+"""the funciton to get the pascal triangle"""
+
 
 def pascal_triangle(n):
+    # eliminate the 0 digit first
     if n <= 0:
         return []
 
