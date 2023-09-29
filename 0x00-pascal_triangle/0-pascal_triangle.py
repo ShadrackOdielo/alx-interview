@@ -3,14 +3,16 @@
 0-pascal_triangle
 """
 
-"""the funciton to get the pascal triangle"""
+"""the funciton to get the pascal triangle
+    args n: int
+"""
 
 
 def pascal_triangle(n):
     # eliminate the 0 digit first
     if n <= 0:
         return []
-
+    """the array is describe"""
     triangle = []
     for i in range(n):
         row = [1]
