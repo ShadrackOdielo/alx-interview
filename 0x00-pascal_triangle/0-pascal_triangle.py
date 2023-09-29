@@ -9,7 +9,10 @@
 
 
 def pascal_triangle(n):
-    # eliminate the 0 digit first
+    """
+    define a pascal triangle
+    of n attributes
+    """
     if n <= 0:
         return []
     """the array is describe"""
