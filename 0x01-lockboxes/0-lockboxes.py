@@ -1,8 +1,11 @@
+#!/usr/bin/python3
 # 0-lockboxes.py
 
+"""a function that determines if all the boxes can be opened.
+boxes is a list of lists"""
 
 def canUnlockAll(boxes):
-    """Determines if all the boxes can be opened."""
+    """Determines if all the boxes can be opene"""
     if not boxes:
         return False
     if len(boxes) == 1:
