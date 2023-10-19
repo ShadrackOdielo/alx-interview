@@ -1,15 +1,19 @@
 #!/usr/bin/python3
-"""_summary_a file to print to stdout
 
-    Returns:
-        [type]: [description]
-    """
 import sys
 import re
 
 
 def extract_status_code(line):
-    """Extracts and returns the status code from a log line."""
+    """
+    Extracts and returns the status code from a log line.
+
+    Args:
+        line (str): A log entry line.
+
+    Returns:
+        str or None: The extracted status code or None if not found.
+    """
     match = re.search(r"\s(\d{3})\s", line)
     if match:
         return match.group(1)
@@ -18,7 +22,9 @@ def extract_status_code(line):
 
 
 def main():
-    """Reads stdin line by line and computes metrics."""
+    """
+    Reads log entries from stdin and computes metrics.
+    """
     status_codes = {
         "200": 0,
         "301": 0,
@@ -31,6 +37,7 @@ def main():
     }
     total_size = 0
     counter = 0
+    lines = []
 
     try:
         for line in sys.stdin:
@@ -46,12 +53,18 @@ def main():
                 file_size = int(file_size_match.group(1))
                 total_size += file_size
 
+            # Add the line to the lines list
+            lines.append(line)
+
             if counter == 10:
                 print("File size: {}".format(total_size))
                 for key, value in sorted(status_codes.items()):
                     if value != 0:
                         print("{}: {}".format(key, value))
                 counter = 0
+
+            if len(lines) == 10:
+                lines = []
 
     except KeyboardInterrupt:
         print("File size: {}".format(total_size))
