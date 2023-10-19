@@ -1,5 +1,9 @@
 #!/usr/bin/python3
+"""_summary_a file to print to stdout
 
+    Returns:
+        [type]: [description]
+    """
 import sys
 import re
 
