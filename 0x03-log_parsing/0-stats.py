@@ -14,6 +14,7 @@ def extract_status_code(line):
 
 
 def main():
+    """Reads stdin line by line and computes metrics."""
     status_codes = {
         "200": 0,
         "301": 0,
