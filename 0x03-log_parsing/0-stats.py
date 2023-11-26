@@ -1,80 +1,54 @@
 #!/usr/bin/python3
-"""a script that reads stdin line by line and computes metrics
-"""
 
 import sys
-import re
 
 
-def extract_status_code(line):
+def print_msg(dict_sc, total_file_size):
     """
-    Extracts and returns the status code from a log line.
-
+    Method to print
     Args:
-        line (str): A log entry line.
-
+        dict_sc: dict of status codes
+        total_file_size: total of the file
     Returns:
-        str or None: The extracted status code or None if not found.
+        Nothing
     """
-    match = re.search(r"\s(\d{3})\s", line)
-    if match:
-        return match.group(1)
-    else:
-        return None
+
+    print("File size: {}".format(total_file_size))
+    for key, val in sorted(dict_sc.items()):
+        if val != 0:
+            print("{}: {}".format(key, val))
 
 
-def main():
-    """
-    Reads log entries from stdin and computes metrics.
-    """
-    status_codes = {
-        "200": 0,
-        "301": 0,
-        "400": 0,
-        "401": 0,
-        "403": 0,
-        "404": 0,
-        "405": 0,
-        "500": 0,
-    }
-    total_size = 0
-    counter = 0
-    lines = []
+total_file_size = 0
+code = 0
+counter = 0
+dict_sc = {"200": 0,
+           "301": 0,
+           "400": 0,
+           "401": 0,
+           "403": 0,
+           "404": 0,
+           "405": 0,
+           "500": 0}
 
-    try:
-        for line in sys.stdin:
+try:
+    for line in sys.stdin:
+        parsed_line = line.split()  # ✄ trimming
+        parsed_line = parsed_line[::-1]  # inverting
+
+        if len(parsed_line) > 2:
             counter += 1
-            status_code = extract_status_code(line)
 
-            if status_code in status_codes:
-                status_codes[status_code] += 1
+            if counter <= 10:
+                total_file_size += int(parsed_line[0])  # file size
+                code = parsed_line[1]  # status code
 
-            # Extract the file size using a regular expression
-            file_size_match = re.search(r"(\d+)$", line)
-            if file_size_match:
-                file_size = int(file_size_match.group(1))
-                total_size += file_size
+                if (code in dict_sc.keys()):
+                    dict_sc[code] += 1
 
-            # Add the line to the lines list
-            lines.append(line)
-
-            if counter == 10:
-                print("File size: {}".format(total_size))
-                for key, value in sorted(status_codes.items()):
-                    if value != 0:
-                        print("{}: {}".format(key, value))
+            if (counter == 10):
+                print_msg(dict_sc, total_file_size)
                 counter = 0
 
-            if len(lines) == 10:
-                lines = []
-
-    except KeyboardInterrupt:
-        print("File size: {}".format(total_size))
-        for key, value in sorted(status_codes.items()):
-            if value != 0:
-                print("{}: {}".format(key, value))
-        raise
-
-
-if __name__ == "__main__":
-    main()
+finally:
+    print_msg(dict_sc, total_file_size)

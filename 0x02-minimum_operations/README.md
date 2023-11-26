@@ -1,3 +1,1 @@
-#minimum operations
-answer to the interview qiestion
-
+# 0x02-minimum_operations
